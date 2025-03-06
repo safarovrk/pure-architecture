@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="amount">Сумма</string>
+    <string name="transfer">Перевести</string>
+    <string name="to_account">Счет зачисления</string>
+    <string name="from_account">Счет списания</string>
+    <string name="rub"> RUB</string>
+    <string name="dotted_number">••%1$s</string>
+</resources>
