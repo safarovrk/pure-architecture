@@ -1,47 +1,38 @@
 package com.example.purearchitecture
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.purearchitecture.ui.theme.PureArchitectureTheme
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
+import com.example.feature.navigator.MainNavigator
+import com.example.feature.success.presentation.SuccessFragment
+import com.example.feature.transfer.presentation.TransferFragment
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity(), MainNavigator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            PureArchitectureTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+        setContentView(R.layout.empty_activity)
+
+        supportFragmentManager.commit {
+            replace(
+                R.id.container,
+                TransferFragment(),
+                TransferFragment.TAG
+            )
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PureArchitectureTheme {
-        Greeting("Android")
+    override fun openSuccessScreen(accountFromId: String, accountToId: String, amount: String) {
+        supportFragmentManager.commit {
+            replace(
+                R.id.container,
+                SuccessFragment.newInstance(
+                    accountFromId = accountFromId,
+                    accountToId = accountToId,
+                    amount = amount
+                ),
+                SuccessFragment.TAG
+            )
+            addToBackStack(SuccessFragment.TAG)
+        }
     }
 }
