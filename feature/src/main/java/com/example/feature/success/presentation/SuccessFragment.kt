@@ -17,8 +17,8 @@ import androidx.fragment.app.Fragment
 
 class SuccessFragment : Fragment() {
 
-    private val accountFromName: String? by lazy { requireArguments().getString(ACCOUNT_TO_KEY) }
-    private val accountToName: String? by lazy { requireArguments().getString(ACCOUNT_FROM_KEY) }
+    private val accountFromName: Long? by lazy { requireArguments().getLong(ACCOUNT_TO_KEY) }
+    private val accountToName: Long? by lazy { requireArguments().getLong(ACCOUNT_FROM_KEY) }
     private val amount: String? by lazy { requireArguments().getString(AMOUNT_KEY) }
 
     override fun onCreateView(
@@ -33,8 +33,8 @@ class SuccessFragment : Fragment() {
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Column {
-                        Text(text = accountFromName.orEmpty())
-                        Text(text = accountToName.orEmpty())
+                        Text(text = accountFromName.toString())
+                        Text(text = accountToName.toString())
                         Text(text = amount.orEmpty())
                     }
                 }
@@ -48,7 +48,7 @@ class SuccessFragment : Fragment() {
         private const val ACCOUNT_FROM_KEY = "account_from_key"
         private const val AMOUNT_KEY = "amount_key"
 
-        fun newInstance(accountFromId: String, accountToId: String, amount: String) =
+        fun newInstance(accountFromId: Long, accountToId: Long, amount: String) =
             SuccessFragment().apply {
                 arguments = bundleOf(
                     ACCOUNT_TO_KEY to accountFromId,

@@ -3,7 +3,6 @@ package com.example.feature.transfer.presentation.compose
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -18,9 +17,9 @@ fun TransferScreen(viewModel: TransferViewModel) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         when (val currentState = state) {
-            is ScreenState.Error -> Text(
-                text = currentState.error,
-                modifier = Modifier.fillMaxSize()
+            is ScreenState.Error -> TransferErrorScreen(
+                errorMessage = currentState.error,
+                onRepeat = viewModel::onRepeat
             )
 
             ScreenState.Loading -> CircularProgressIndicator(

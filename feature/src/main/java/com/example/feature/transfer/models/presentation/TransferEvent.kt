@@ -20,8 +20,8 @@ sealed interface TransferEvent {
     value class OnToAccountExpandedChange(val expanded: Boolean) : TransferEvent
 
     data class OnSubmitButtonClicked(
-        val accountFromId: String,
-        val accountToId: String,
+        val accountFromId: Long,
+        val accountToId: Long,
         val amount: String
     ) : TransferEvent
 }
