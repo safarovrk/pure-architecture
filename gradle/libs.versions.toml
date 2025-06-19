@@ -1,16 +1,17 @@
 [versions]
 agp = "8.8.2"
-kotlin = "2.0.0"
-coreKtx = "1.15.0"
+kotlin = "1.9.24"
+kotlinCompose = "2.0.0"
+coreKtx = "1.10.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
-composeBom = "2025.02.00"
+composeBom = "2025.06.00"
 appcompat = "1.7.0"
 material = "1.12.0"
-daggerVersion = "2.48.1"
+daggerVersion = "2.56"
 fragmentKtx = "1.8.6"
 jspeedtest = "1.32.1"
 loggingInterceptor = "4.11.0"
@@ -19,10 +20,14 @@ constraintlayout = "2.2.1"
 navigationFragmentKtx = "2.8.8"
 okhttp = "4.11.0"
 retrofit = "2.9.0"
+roomRuntime = "2.7.1"
 securityCrypto = "1.1.0-alpha06"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -60,4 +65,4 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinCompose" }

@@ -2,11 +2,13 @@ package com.example.feature.transfer.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.core.accountsrepo.data.AccountsStorage
 import com.example.core.accountsrepo.domian.AccountsInteractor
 import com.example.core.accountsrepo.models.TransferStatus
 import com.example.core.models.presentation.ScreenState
 import com.example.feature.transfer.models.presentation.TransferEvent
 import com.example.feature.transfer.models.presentation.TransferScreenState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,8 +18,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TransferViewModel(
+class TransferViewModel @Inject constructor(
     private val accountsInteractor: AccountsInteractor
 ) : ViewModel() {
     private val _uiState: MutableStateFlow<ScreenState<TransferScreenState>> =
@@ -28,11 +31,14 @@ class TransferViewModel(
     val uiEvent: SharedFlow<TransferEvent> = _uiEvent.asSharedFlow()
 
     init {
-        loadData()
+        viewModelScope.launch(Dispatchers.IO) {
+            accountsInteractor.putAccounts(AccountsStorage.accounts)
+            loadData()
+        }
     }
 
-    fun loadData() = viewModelScope.launch {
-        delay(2000)
+    fun loadData() = viewModelScope.launch(Dispatchers.IO) {
+        _uiState.update { ScreenState.Loading }
         val accounts = accountsInteractor.getAccounts()
         _uiState.update {
             ScreenState.Success(
@@ -77,9 +83,8 @@ class TransferViewModel(
                 }
             }
 
-            is TransferEvent.OnSubmitButtonClicked -> viewModelScope.launch {
+            is TransferEvent.OnSubmitButtonClicked -> viewModelScope.launch(Dispatchers.IO) {
                 _uiState.update { ScreenState.Loading }
-                delay(2000)
                 val transferResult = accountsInteractor.transfer(
                     fromAccountId = event.accountFromId,
                     toAccountId = event.accountToId,
@@ -92,4 +97,6 @@ class TransferViewModel(
             }
         }
     }
+
+    fun onRepeat() = loadData()
 }

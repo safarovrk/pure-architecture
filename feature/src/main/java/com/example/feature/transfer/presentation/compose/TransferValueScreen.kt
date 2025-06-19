@@ -40,7 +40,7 @@ fun TransferValueScreen(state: TransferScreenState, onEvent: (TransferEvent) -> 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(32.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         ExposedDropdownMenuBox(
@@ -171,8 +171,8 @@ fun TransferValueScreen(state: TransferScreenState, onEvent: (TransferEvent) -> 
             onClick = {
                 onEvent(
                     TransferEvent.OnSubmitButtonClicked(
-                        accountFromId = state.fromAccount?.id.orEmpty(),
-                        accountToId = state.toAccount?.id.orEmpty(),
+                        accountFromId = state.fromAccount?.id ?: 0L,
+                        accountToId = state.toAccount?.id ?: 0L,
                         amount = state.amount.orEmpty()
                     )
                 )
